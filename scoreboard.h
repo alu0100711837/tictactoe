@@ -12,7 +12,7 @@ class ScoreBoard
 
     public:
         ScoreBoard();
-        inline ~ScoreBoard() {};
+        inline ~ScoreBoard() {}
 
         void incrementCounter(gameResult);
 };

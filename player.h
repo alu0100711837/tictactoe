@@ -16,11 +16,11 @@ class Player
         std::string name_;
 
     public:
-        inline Player(std::string name = "Player"): name_(name) {};
+        inline Player(std::string name = "Player"): name_(name) {}
         virtual ~Player() = 0;
 
-        Movement nextMovement();
-        inline void printName() { std::cout<<name_<<std::endl; } ;
+        virtual Movement nextMovement() = 0;
+        inline void printName() { std::cout<<name_<<std::endl; }
 };
 
 #endif // PLAYER_H

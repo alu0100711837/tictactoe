@@ -11,11 +11,8 @@ int main(int argc, char *argv[])
     std::cout << "Hola!" <<std::endl;
 
     Gameplay A;
-    A.printBoard();
-    A.nextMovement();
-    A.nextMovement();
-    A.nextMovement();
-    A.nextMovement();
+    A.gameLoop();
+
 
     return a.exec();
 

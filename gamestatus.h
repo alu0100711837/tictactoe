@@ -16,6 +16,8 @@ class GameStatus
     public:
         GameStatus();
         ~GameStatus();
+
+        inline void toggleTurnPlayer() { turnPlayer_ = turnPlayer_ == 1? 2: 1; }
 };
 
 #endif // GAMESTATUS_H

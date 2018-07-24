@@ -7,8 +7,9 @@
 class HumanPlayer : public Player
 {
     public:
-        inline HumanPlayer(std::string name = "Human"): Player(name) {};
-        inline ~HumanPlayer() {};
+        inline HumanPlayer(std::string name = "Human"): Player(name) {}
+        inline ~HumanPlayer() {}
+        Movement nextMovement();
 
 };
 

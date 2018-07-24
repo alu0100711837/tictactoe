@@ -13,8 +13,7 @@
 class Gameplay
 {
     private:
-        Player* p1 = new HumanPlayer;
-        Player* p2 = new IAPlayer;
+        std::array<std::unique_ptr<Player>, 2> players_;
         GameStatus gameStatus_;
 
     public:
@@ -22,9 +21,11 @@ class Gameplay
         ~Gameplay();
 
         void printBoard();
-        void nextMovement();
+        bool playTurn(int);
         bool isValidMovement(Movement);
         void makeMovement(Movement, cellStatus);
+        void gameLoop();
+        bool gameFinish();
 
 };
 
