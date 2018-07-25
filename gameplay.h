@@ -15,17 +15,20 @@ class Gameplay
     private:
         std::array<std::unique_ptr<Player>, 2> players_;
         GameStatus gameStatus_;
+        ScoreBoard scoreBoard_;
 
     public:
         Gameplay();
         ~Gameplay();
 
+        void start();
         void printBoard();
         bool playTurn(int);
         bool isValidMovement(Movement);
         void makeMovement(Movement, cellStatus);
         void gameLoop();
         bool gameFinish();
+        int checkWinner();
         bool gameRaw();
 
 };

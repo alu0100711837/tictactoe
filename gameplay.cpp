@@ -52,6 +52,12 @@ void Gameplay::makeMovement(Movement mov, cellStatus player)
     gameStatus_.boardStatus_[mov.i_][mov.j_] = player;
 }
 
+void Gameplay::start()
+{
+    gameLoop();
+    scoreBoard_.print();
+}
+
 void Gameplay::gameLoop()
 {
     do
@@ -60,12 +66,28 @@ void Gameplay::gameLoop()
         {
             gameStatus_.toggleTurnPlayer();
             gameStatus_.turnCount_++;
+
             printBoard();
         }
-    } while ( (!(gameFinish())) && (gameStatus_.turnCount_< 9) );
+    } while (!gameFinish());
 }
 
 bool Gameplay::gameFinish()
+{
+    if (checkWinner())
+    {
+        gameStatus_.toggleTurnPlayer();
+        scoreBoard_.incrementCounter(gameStatus_.turnPlayer_);
+        return true;
+    }
+    if (gameRaw())
+    {
+        scoreBoard_.incrementCounter(gameResult::raw);
+        return true;
+    }
+}
+
+int Gameplay::checkWinner()
 {
     //CHECK BOARD
     //Check by row
@@ -90,13 +112,7 @@ bool Gameplay::gameFinish()
 bool Gameplay::gameRaw()
 {
     if (gameStatus_.turnCount_ < 9)
-    {
-        gameStatus_.turnCount_++;
         return false;
-    }
     else
-    {
-
         return true;
-    }
 }

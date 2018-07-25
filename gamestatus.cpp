@@ -1,9 +1,15 @@
 #include "gamestatus.h"
 
-GameStatus::GameStatus():
-    turnCount_(0),
-    turnPlayer_(1)
+
+GameStatus::~GameStatus()
 {
+
+}
+
+void GameStatus::initialize()
+{
+    turnCount_ = 0;
+    turnPlayer_ = 1;
     for ( auto &i : boardStatus_)
     {
         for (auto &j : i)
@@ -11,7 +17,7 @@ GameStatus::GameStatus():
     }
 }
 
-GameStatus::~GameStatus()
+void GameStatus::reset()
 {
-
+    initialize();
 }

@@ -2,6 +2,7 @@
 #define SCOREBOARD_H
 
 #include <array>
+#include <iostream>
 
 enum gameResult {raw, Player1, Player2};
 
@@ -14,7 +15,8 @@ class ScoreBoard
         ScoreBoard();
         inline ~ScoreBoard() {}
 
-        void incrementCounter(gameResult);
+        void incrementCounter(int);
+        void print();
 };
 
 #endif // SCOREBOARD_H

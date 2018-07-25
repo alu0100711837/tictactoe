@@ -14,9 +14,11 @@ class GameStatus
         time_t startTime_;
 
     public:
-        GameStatus();
+        inline GameStatus() { initialize(); }
         ~GameStatus();
 
+        void initialize();
+        void reset();
         inline void toggleTurnPlayer() { turnPlayer_ = turnPlayer_ == 1? 2: 1; }
 };
 
