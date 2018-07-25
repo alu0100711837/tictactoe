@@ -14,6 +14,7 @@ Gameplay::~Gameplay()
 
 void Gameplay::printBoard()
 {
+    std::cout << "Turnos: " << gameStatus_.turnCount_ << std::endl;
     for ( auto &i : gameStatus_.boardStatus_)
     {
         for (auto &j : i)
@@ -58,15 +59,44 @@ void Gameplay::gameLoop()
         if(playTurn(gameStatus_.turnPlayer_))
         {
             gameStatus_.toggleTurnPlayer();
+            gameStatus_.turnCount_++;
             printBoard();
         }
-    } while (!(gameFinish()));
+    } while ( (!(gameFinish())) && (gameStatus_.turnCount_< 9) );
 }
 
 bool Gameplay::gameFinish()
 {
     //CHECK BOARD
+    //Check by row
+    for (int i = 0; i < gameStatus_.boardStatus_.size(); i++)
+    {
+        if (gameStatus_.boardStatus_[i][0] != 0)
+        {
+            if (gameStatus_.boardStatus_[i][0] == gameStatus_.boardStatus_[i][1] &&
+                gameStatus_.boardStatus_[i][1] == gameStatus_.boardStatus_[i][2])
+                    return true;
+        }
+    }
+    //check by column
 
+    //check diagonal
+
+    //check secondary diagonal
 
     return false;
+}
+
+bool Gameplay::gameRaw()
+{
+    if (gameStatus_.turnCount_ < 9)
+    {
+        gameStatus_.turnCount_++;
+        return false;
+    }
+    else
+    {
+
+        return true;
+    }
 }

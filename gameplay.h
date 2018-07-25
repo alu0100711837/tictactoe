@@ -26,6 +26,7 @@ class Gameplay
         void makeMovement(Movement, cellStatus);
         void gameLoop();
         bool gameFinish();
+        bool gameRaw();
 
 };
 
