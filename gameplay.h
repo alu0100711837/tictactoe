@@ -21,12 +21,17 @@ class Gameplay
         Gameplay();
         ~Gameplay();
 
+        void mainLoop();
+
+    private:
         void start();
-        void printBoard();
+        void gameLoop();
+
         bool playTurn(int);
         bool isValidMovement(Movement);
         void makeMovement(Movement, cellStatus);
-        void gameLoop();
+        void printBoard();
+
         bool gameFinish();
         int checkWinner();
         bool gameRaw();

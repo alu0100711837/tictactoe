@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     std::cout << "Hola!" <<std::endl;
 
     Gameplay A;
-    //A.start();
+    A.mainLoop();
 
 
     return a.exec();

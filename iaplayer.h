@@ -2,6 +2,7 @@
 #define IAPLAYER_H
 
 #include <string>
+#include <random>
 #include "player.h"
 
 class IAPlayer : public Player
@@ -10,7 +11,7 @@ class IAPlayer : public Player
         inline IAPlayer(std::string name = "Computer"): Player(name) {}
         inline ~IAPlayer() {}
 
-        virtual Movement nextMovement();
+        Movement nextMovement();
 };
 
 #endif // IAPLAYER_H

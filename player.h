@@ -12,7 +12,7 @@ struct Movement {
 
 class Player
 {
-    private:
+    protected:
         std::string name_;
 
     public:

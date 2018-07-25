@@ -2,8 +2,11 @@
 
 Gameplay::Gameplay()
 {
-    for (auto &player : players_)
+    /*for (auto &player : players_)
         player = std::unique_ptr<Player>(new(HumanPlayer));
+        */
+    players_[0] = std::unique_ptr<Player>(new(HumanPlayer));
+    players_[1] = std::unique_ptr<Player>(new(IAPlayer));
 }
 
 Gameplay::~Gameplay()
@@ -48,14 +51,26 @@ bool Gameplay::isValidMovement(Movement mov)
 
 void Gameplay::makeMovement(Movement mov, cellStatus player)
 {
-    std::cout<<player<<std::endl;
     gameStatus_.boardStatus_[mov.i_][mov.j_] = player;
 }
 
 void Gameplay::start()
 {
+    gameStatus_.reset();
     gameLoop();
     scoreBoard_.print();
+}
+
+void Gameplay::mainLoop()
+{
+    char exit = '1';
+    do
+    {
+        start();
+        std::cout << "Repetir?: " <<std::endl;
+        std::cin >> exit;
+    } while(exit != '0');
+
 }
 
 void Gameplay::gameLoop()
