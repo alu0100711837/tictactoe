@@ -1,7 +1,6 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 
-
 #include <memory>
 #include "player.h"
 #include "humanplayer.h"
@@ -9,6 +8,7 @@
 #include "gamestatus.h"
 #include "scoreboard.h"
 
+enum class gameMode {humanVsHuman, humanVsCpu, cpuVsCpu};
 
 class Gameplay
 {
@@ -18,7 +18,7 @@ class Gameplay
         ScoreBoard scoreBoard_;
 
     public:
-        Gameplay();
+        Gameplay(gameMode = gameMode::humanVsCpu);
         ~Gameplay();
 
         void mainLoop();
@@ -34,7 +34,7 @@ class Gameplay
 
         bool gameFinish();
         int checkWinner();
-        bool gameRaw();
+        inline bool gameRaw() { return (gameStatus_.turnCount_ > 8); }
 
 };
 

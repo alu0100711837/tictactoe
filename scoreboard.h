@@ -4,18 +4,18 @@
 #include <array>
 #include <iostream>
 
-enum gameResult {raw, Player1, Player2};
+enum class gameResult {raw, player1, player2};
 
 class ScoreBoard
 {
     private:
-        std::array<int, 3> scores_;
+        std::array<int, 3> scores_; //{ empates, puntos de player 1, puntos de player 2 }
 
     public:
         ScoreBoard();
         inline ~ScoreBoard() {}
 
-        void incrementCounter(int);
+        inline void incrementCounter(gameResult result) { scores_[static_cast<int>(result)]++; }
         void print();
 };
 

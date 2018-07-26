@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 
     std::cout << "Hola!" <<std::endl;
 
-    Gameplay A;
+    Gameplay A(gameMode::humanVsCpu);
     A.mainLoop();
 
 

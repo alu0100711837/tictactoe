@@ -10,7 +10,6 @@ class HumanPlayer : public Player
         inline HumanPlayer(std::string name = "Human"): Player(name) {}
         inline ~HumanPlayer() {}
         Movement nextMovement();
-
 };
 
 #endif // HUMANPLAYER_H

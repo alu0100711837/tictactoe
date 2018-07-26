@@ -1,12 +1,22 @@
 #include "gameplay.h"
 
-Gameplay::Gameplay()
+Gameplay::Gameplay(gameMode mode)
 {
-    /*for (auto &player : players_)
-        player = std::unique_ptr<Player>(new(HumanPlayer));
-        */
-    players_[0] = std::unique_ptr<Player>(new(HumanPlayer));
-    players_[1] = std::unique_ptr<Player>(new(IAPlayer));
+    if (mode == gameMode::humanVsHuman)
+    {
+        for (auto &player : players_)
+            player = std::unique_ptr<Player>(new(HumanPlayer));
+    }
+    if (mode == gameMode::cpuVsCpu)
+    {
+        for (auto &player : players_)
+            player = std::unique_ptr<Player>(new(IAPlayer));
+    }
+    if (mode == gameMode::humanVsCpu)
+    {
+        players_[0] = std::unique_ptr<Player>(new(HumanPlayer));
+        players_[1] = std::unique_ptr<Player>(new(IAPlayer));
+    }
 }
 
 Gameplay::~Gameplay()
@@ -15,15 +25,39 @@ Gameplay::~Gameplay()
 }
 
 
-void Gameplay::printBoard()
+void Gameplay::mainLoop()
 {
-    std::cout << "Turnos: " << gameStatus_.turnCount_ << std::endl;
-    for ( auto &i : gameStatus_.boardStatus_)
+    char exit = '1';
+    do
     {
-        for (auto &j : i)
-            std::cout << j << " ";
-        std::cout<<std::endl;
-    }
+        start();
+        std::cout << "Repetir?: " <<std::endl;
+        std::cin >> exit;
+    } while(exit != '0');
+}
+
+
+void Gameplay::start()
+{
+    gameStatus_.reset();
+    gameLoop();
+    scoreBoard_.print();
+}
+
+
+void Gameplay::gameLoop()
+{
+    do
+    {
+        if(playTurn(gameStatus_.turnPlayer_))
+        {
+            gameStatus_.toggleTurnPlayer();
+            gameStatus_.turnCount_++;
+
+            printBoard();
+            scoreBoard_.print();
+        }
+    } while (!gameFinish());
 }
 
 
@@ -38,6 +72,7 @@ bool Gameplay::playTurn(int turnPlayer)
     }
     return false;
 }
+
 
 bool Gameplay::isValidMovement(Movement mov)
 {
@@ -54,45 +89,26 @@ void Gameplay::makeMovement(Movement mov, cellStatus player)
     gameStatus_.boardStatus_[mov.i_][mov.j_] = player;
 }
 
-void Gameplay::start()
-{
-    gameStatus_.reset();
-    gameLoop();
-    scoreBoard_.print();
-}
 
-void Gameplay::mainLoop()
+void Gameplay::printBoard()
 {
-    char exit = '1';
-    do
+    std::cout << "Turnos: " << gameStatus_.turnCount_ << std::endl;
+    for ( auto &i : gameStatus_.boardStatus_)
     {
-        start();
-        std::cout << "Repetir?: " <<std::endl;
-        std::cin >> exit;
-    } while(exit != '0');
-
+        for (auto &j : i)
+            std::cout << static_cast<int>(j) << " ";
+        std::cout<<std::endl;
+    }
 }
 
-void Gameplay::gameLoop()
-{
-    do
-    {
-        if(playTurn(gameStatus_.turnPlayer_))
-        {
-            gameStatus_.toggleTurnPlayer();
-            gameStatus_.turnCount_++;
-
-            printBoard();
-        }
-    } while (!gameFinish());
-}
 
 bool Gameplay::gameFinish()
 {
     if (checkWinner())
     {
         gameStatus_.toggleTurnPlayer();
-        scoreBoard_.incrementCounter(gameStatus_.turnPlayer_);
+
+        scoreBoard_.incrementCounter(static_cast<gameResult>(gameStatus_.turnPlayer_));
         return true;
     }
     if (gameRaw())
@@ -100,34 +116,30 @@ bool Gameplay::gameFinish()
         scoreBoard_.incrementCounter(gameResult::raw);
         return true;
     }
+    return false;
 }
+
 
 int Gameplay::checkWinner()
 {
-    //CHECK BOARD
-    //Check by row
+    /*
+     * Método no terminado. De momento con las filas es suficiente para centrarme
+     * en otros aspectos más importantes.
+     * NOTA: cambiar el bucle por notación de C++ moderno.
+     * */
+    //Chequear filas
     for (int i = 0; i < gameStatus_.boardStatus_.size(); i++)
     {
-        if (gameStatus_.boardStatus_[i][0] != 0)
+        if (gameStatus_.boardStatus_[i][0] != cellStatus::empty)
         {
             if (gameStatus_.boardStatus_[i][0] == gameStatus_.boardStatus_[i][1] &&
                 gameStatus_.boardStatus_[i][1] == gameStatus_.boardStatus_[i][2])
                     return true;
         }
     }
-    //check by column
-
-    //check diagonal
-
-    //check secondary diagonal
+    //Chequear columnas
+    //Chequear diagonal
+    //Chequear diagonal secundaria
 
     return false;
-}
-
-bool Gameplay::gameRaw()
-{
-    if (gameStatus_.turnCount_ < 9)
-        return false;
-    else
-        return true;
 }

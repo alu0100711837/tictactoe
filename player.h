@@ -20,7 +20,6 @@ class Player
         virtual ~Player() = 0;
 
         virtual Movement nextMovement() = 0;
-        inline void printName() { std::cout<<name_<<std::endl; }
 };
 
 #endif // PLAYER_H

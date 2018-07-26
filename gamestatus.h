@@ -3,15 +3,14 @@
 
 #include <array>
 
-enum cellStatus {empty, player1, player2};
+enum class cellStatus {empty, player1, player2};
 
 class GameStatus
 {
     public:
         std::array<std::array<cellStatus, 3>, 3> boardStatus_;
-        short int turnCount_;
-        short int turnPlayer_;
-        time_t startTime_;
+        int turnCount_;
+        int turnPlayer_;
 
     public:
         inline GameStatus() { initialize(); }
